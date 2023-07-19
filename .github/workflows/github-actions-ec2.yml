@@ -20,4 +20,6 @@ jobs:
           port: ${{ secrets.DEPLOY_PORT }}
           user: ${{ secrets.USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
+      - run: |
+          ls -al
 
