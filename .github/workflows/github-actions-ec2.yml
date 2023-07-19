@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - uses: mdallasanta/ssh-scp-deploy@{version}
+      - uses: mdallasanta/ssh-scp-deploy@1.2.0
         with:
           local: './'                                                  # Local file path - REQUIRED false - DEFAULT ./
           remote: '/opt/tomcat/webapps'                                                 # Remote file path - REQUIRED false - DEFAULT ~/
