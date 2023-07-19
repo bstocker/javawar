@@ -14,10 +14,10 @@ jobs:
       - name: Deploy
         env:
             PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
-            HOSTNAME: ${{secrets.HOST_DNS}}
+            HOSTNAME: ${{ secrets.HOST_DNS }}
             USER_NAME: ${{ secrets.USERNAME }}
             TARGET: ${{ secrets.TARGET_DIR }}
         run: |
-          echo ${EC2_SSH_KEY} > private_key && chmod 600 private_key
-          scp -i private_key sample.war ${USER_NAME}@${HOSTNAME}:${TARGET}
+          echo ${EC2_SSH_KEY} > EPSI2023_G3.pem && chmod 777 EPSI2023_G3.pem
+          scp -i EPSI2023_G3.pem sample.war ${USER_NAME}@${HOSTNAME}:${TARGET}
           ls
