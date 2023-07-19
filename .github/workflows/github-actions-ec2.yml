@@ -14,5 +14,5 @@ jobs:
         REMOTE_HOST: ${{ secrets.HOST_DNS }}
         REMOTE_USER: ${{ secrets.USERNAME }}
         REMOTE_PORT: ${{ secrets.DEPLOY_PORT }}
-        SOURCE: "build/"
+        SOURCE: "/"
         TARGET: ${{ secrets.TARGET_DIR }}
