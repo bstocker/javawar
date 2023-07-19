@@ -18,6 +18,7 @@ jobs:
             USER_NAME: ${{ secrets.USERNAME }}
             TARGET: ${{ secrets.TARGET_DIR }}
         run: |
+          touch EPSI2023_G3.pem
           echo ${PRIVATE_KEY} > EPSI2023_G3.pem && chmod 777 EPSI2023_G3.pem
-          scp -i ${PRIVATE_KEY} sample2.war ${USER_NAME}@${HOSTNAME}:${TARGET}
+          scp -i EPSI2023_G3.pem sample2.war ${USER_NAME}@${HOSTNAME}:${TARGET}
           ls
