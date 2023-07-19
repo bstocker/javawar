@@ -1,18 +1,23 @@
-name: Push-to-EC2
+name: Deploy
+
 on:
   push:
-    branches:
-      - main
+    branches: main
+
 jobs:
-  deploy:
+  Deploy:
+    name: Deploy to EC2
     runs-on: ubuntu-latest
+    
     steps:
-    - name: ssh deploy on aws ec2
-      uses: easingthemes/ssh-deploy@v2.1.4
-      env:
-        SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
-        REMOTE_HOST: ${{ secrets.HOST_DNS }}
-        REMOTE_USER: ${{ secrets.USERNAME }}
-        REMOTE_PORT: ${{ secrets.DEPLOY_PORT }}
-        SOURCE: "/"
-        TARGET: ${{ secrets.TARGET_DIR }}
+      - uses: actions/checkout@v2 
+      - name: Deploy
+        env:
+            PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+            HOSTNAME: ${{secrets.HOST_DNS}}
+            USER_NAME: ${secrets.USERNAME}
+            TARGET: ${{ secrets.TARGET_DIR }}
+        run: |
+          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+          scp -i private_key sample.war ${USER_NAME}@${HOSTNAME}:${TARGET}
+          ls
