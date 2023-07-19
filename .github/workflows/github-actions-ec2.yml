@@ -2,23 +2,21 @@ name: Deploy
 
 on:
   push:
-    branches: main
+    branches:
+      - main
 
 jobs:
-  Deploy:
-    name: Deploy to EC2
+  build:
     runs-on: ubuntu-latest
-    
+    name: Deploy
+
     steps:
-      - uses: actions/checkout@v2 
-      - name: Deploy
-        env:
-            PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
-            HOSTNAME: ${{ secrets.HOST_DNS }}
-            USER_NAME: ${{ secrets.USERNAME }}
-            TARGET: ${{ secrets.TARGET_DIR }}
-        run: |
-          touch EPSI2023_G3.pem
-          echo ${PRIVATE_KEY} > EPSI2023_G3.pem && chmod 777 EPSI2023_G3.pem
-          scp -i EPSI2023_G3.pem sample2.war ${USER_NAME}@${HOSTNAME}:${TARGET}
-          ls
+      - name: Publish
+        uses: nogsantos/scp-deploy@master
+        with:
+          src: ./*
+          host: ${{ secrets.HOST_DNS }}
+          remote: ${{ secrets.TARGET_DIR }}
+          port: ${{ secrets.SSH_PORT }}
+          user: ${{ secrets.USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
